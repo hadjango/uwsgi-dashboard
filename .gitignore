@@ -1,0 +1,4 @@
+src/vendor/
+node_modules/
+.DS_Store
+dist/status.json

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>uWSGI server status</title>
+    <link rel="stylesheet" type="text/css" href="app.css" />
+    <script>
+    ['servers', 'server', 'config', 'processes', 'process', 'workers', 'worker', 'queue'].forEach(function(name) {
+        document.registerElement("uwsgi-" + name);
+    })
+    </script>
+    <script type="text/html" id="popover-template">
+        <table class="table-condensed">
+            <tbody>
+                <tr>
+                    <th>Deploy tag</th>
+                    <td data-bind="text: worker.deploy_tag()"></td>
+                </tr>
+                <tr>
+                    <th>Status</th>
+                    <td data-bind="text: worker.status()"></td>
+                </tr>
+                <tr>
+                    <th>Create time</th>
+                    <td data-bind="text: worker.createTime()"></td>
+                </tr>
+                <!-- ko if: worker.status() != 'sleeping' -->
+                <tr>
+                    <th>Requests</th>
+                    <td data-bind="text: worker.delta_requests()"></td>
+                </tr>
+                <!-- /ko -->
+                <!-- ko if: worker.status() == 'busy' -->
+                <!-- ko if: worker.currentRequestUrl() -->
+                <tr>
+                    <th>Current request</th>
+                    <td data-bind="text: worker.currentRequestUrl()"></td>
+                </tr>
+                <!-- /ko -->
+                <!-- /ko -->
+                <!-- ko if: worker.delta_requests() > 0 -->
+                <tr>
+                    <th>Running time</th>
+                    <td data-bind="text: worker.runningTime()"></td>
+                </tr>
+                <tr>
+                    <th>Avg. response time</th>
+                    <td data-bind="text: worker.averageResponseTime()"></td>
+                </tr>
+                <tr>
+                    <th>Memory Usage</th>
+                    <td data-bind="text: worker.rssSize()"></td>
+                </tr>
+                <tr>
+                    <th>Exceptions</th>
+                    <td data-bind="text: worker.exceptions()"></td>
+                </tr>
+                <!-- /ko -->
+            </tbody>
+        </table>
+    </script>
+</head>
+<body>
+    <uwsgi-key>
+        <uwsgi-deploys data-bind="foreach: { data: deploys, as: 'deploy' }">
+            <uwsgi-deploy data-bind="attr: { 'class': 'deploy-' + deploy.index() }">
+                <span class="dot"></span>
+                <span class="uwsgi-label" data-bind="html: deploy.tag"></span>
+            </uwsgi-deploy>
+        </uwsgi-deploys>
+        <uwsgi-example-worker class="example busy">
+            <span class="dot"></span>
+            <span class="uwsgi-label">Busy</span>
+        </uwsgi-example-worker>
+        <uwsgi-example-worker class="example running">
+            <span class="dot"></span>
+            <span class="uwsgi-label">Running</span>
+        </uwsgi-example-worker>
+        <uwsgi-example-worker class="example no-requests">
+            <span class="dot"></span>
+            <span class="uwsgi-label">Running, no requests</span>
+        </uwsgi-example-worker>
+    </uwsgi-key>
+
+    <table class="server-configs server-configs-apps">
+
+        <!-- ko foreach: { data: configs, as: 'config' } -->
+        <tr>
+            <td class="server-name" data-bind="text: config.name"></td>
+            <td>
+                <uwsgi-processes data-bind="foreach: { data: config.processes, as: 'process' }">
+                    <uwsgi-process data-bind="foreach: { data: process.workers, as: 'worker' }">
+                        <uwsgi-worker data-bind="attr: {
+                                class: worker.className(),
+                                title: worker.pid() + ': ' + worker.deploy_tag()
+                            }">
+                            <span class="dot" data-bind="popover: {
+                                template: 'popover-template',
+                                data: { worker: worker },
+                                options: { title: worker.tooltipTitle(), trigger: 'hover' }
+                            }"></span>
+                        </uwsgi-worker>
+                    </uwsgi-process>
+                    <uwsgi-queue data-bind="attr: { class: process.queueClass() }">
+                        <div data-bind="attr: { style: 'width: ' + process.queuePercentage() + '%' }"></div>
+                    </uwsgi-queue>
+                </uwsgi-processes>
+            </td>
+        </tr>
+        <!-- /ko -->
+    </table>
+<script src="app.js" type="text/javascript"></script>
+</body>
+</html>

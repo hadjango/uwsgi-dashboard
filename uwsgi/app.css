@@ -1,0 +1,169 @@
+@import url("bootstrap.css");
+
+* {
+     -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+     box-sizing: content-box;
+}
+
+body {
+    font-family: "Proxima Nova";
+    line-height: 1.5;
+    font-size: 16px;
+    margin: 20px;
+}
+h2.config-name {
+    font-weight: normal;
+    margin: 0;
+    line-height: 1;
+}
+h3.server-name {
+    font-size: 20px;
+    margin: 0.5em 0;
+    font-weight: 300;
+}
+uwsgi-key {
+    line-height: 1;
+    padding-bottom: 21px;
+}
+uwsgi-deploys {
+    margin-bottom: 10px;
+}
+uwsgi-key, uwsgi-deploys, uwsgi-configs, uwsgi-config, uwsgi-server, uwsgi-processes, uwsgi-process {
+    display: block;
+}
+
+uwsgi-processes {
+    min-height: 37px;
+}
+uwsgi-config {
+    background: #f2f2f2;
+    display: inline-block;
+    padding: 10px;
+    float: left;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+    margin: 0 10px 10px 0;
+}
+uwsgi-queue {
+    display: block;
+    visibility: hidden;
+    height: 10px;
+    width: 0;
+    background: #fff;
+    width: 100%;
+}
+uwsgi-queue div {
+    background: #f00;
+    height: 10px;
+}
+uwsgi-queue.has-queue {
+    visibility: visible;
+}
+uwsgi-worker, uwsgi-deploy, uwsgi-example-worker {
+    -moz-border-radius: 14px;
+    -webkit-border-radius: 14px;
+    border-radius: 14px;
+    display: inline-block;
+    height: 20px;
+    margin-right: 1px;
+    position: relative;
+}
+
+uwsgi-server {
+    white-space: nowrap;
+}
+uwsgi-server:nth-of-type(2n + 1) {
+    margin-right: 20px;    
+}
+
+uwsgi-worker {
+    width: 20px;        
+}
+.dot {
+    position: absolute;
+    top: 0;
+    left: 0;
+    -moz-border-radius: 14px;
+    -webkit-border-radius: 14px;
+    border-radius: 14px;
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    background-color: #666;
+    border: 5px solid #666;
+    transition: all 0.5s ease;
+    -webkit-transition: all 0.5s ease;
+}
+table.server-configs {
+    margin-top: 40px;
+}
+table.server-configs .dot {
+    top: 7px;
+}
+.busy .dot {
+    border-color: #000;
+}
+.sleeping .dot {
+    background-color: #fff !important;
+    opacity: 0.5;
+}
+.uwsgi-label {
+    line-height: 21px;
+    padding-left: 25px;
+    padding-right: 10px;
+}
+
+.deploy-0 .dot { background-color: rgba( 31, 120, 180, 1.0); border-color: rgba( 31, 120, 180, 1.0) }
+.deploy-1 .dot { background-color: rgba( 51, 160,  44, 1.0); border-color: rgba( 51, 160,  44, 1.0) }
+.deploy-2 .dot { background-color: rgba(255, 127,   0, 1.0); border-color: rgba(255, 127,   0, 1.0) }
+.deploy-3 .dot { background-color: rgba(129,  74, 187, 1.0); border-color: rgba(129,  74, 187, 1.0) }
+.deploy-4 .dot { background-color: rgba(227,  26,  28, 1.0); border-color: rgba(227,  26,  28, 1.0) }
+.deploy-5 .dot { background-color: rgba(166, 206, 227, 1.0); border-color: rgba(166, 206, 227, 1.0) }
+.deploy-6 .dot { background-color: rgba(178, 223, 138, 1.0); border-color: rgba(178, 223, 138, 1.0) }
+.deploy-7 .dot { background-color: rgba(253, 191, 111, 1.0); border-color: rgba(253, 191, 111, 1.0) }
+.deploy-8 .dot { background-color: rgba(202, 178, 214, 1.0); border-color: rgba(202, 178, 214, 1.0) }
+.deploy-9 .dot { background-color: rgba(251, 154, 153, 1.0); border-color: rgba(251, 154, 153, 1.0) }
+.deploy-0.busy .dot,
+.deploy-1.busy .dot,
+.deploy-2.busy .dot,
+.deploy-3.busy .dot,
+.deploy-4.busy .dot,
+.deploy-5.busy .dot,
+.deploy-6.busy .dot,
+.deploy-7.busy .dot,
+.deploy-8.busy .dot,
+.deploy-9.busy .dot {
+    border-color: #000;
+}
+.deploy-0.no-requests .dot { background-color: rgba( 31, 120, 180, 0.4);  }
+.deploy-1.no-requests .dot { background-color: rgba( 51, 160,  44, 0.4);  }
+.deploy-2.no-requests .dot { background-color: rgba(255, 127,   0, 0.4);  }
+.deploy-3.no-requests .dot { background-color: rgba(129,  74, 187, 0.4);  }
+.deploy-4.no-requests .dot { background-color: rgba(227,  26,  28, 0.4);  }
+.deploy-5.no-requests .dot { background-color: rgba(166, 206, 227, 0.4);  }
+.deploy-6.no-requests .dot { background-color: rgba(178, 223, 138, 0.4);  }
+.deploy-7.no-requests .dot { background-color: rgba(253, 191, 111, 0.4);  }
+.deploy-8.no-requests .dot { background-color: rgba(202, 178, 214, 0.4);  }
+.deploy-9.no-requests .dot { background-color: rgba(251, 154, 153, 0.4);  }
+.example.no-requests .dot  { background-color: rgba(0,     0,   0, 0.4); }
+
+button.close {
+    position: absolute;
+    top: 5px;
+    right: 9px;
+}
+
+.popover { max-width: initial; }
+
+.popover-title {
+    white-space: nowrap;
+}
+
+table td, table th { white-space: nowrap; }
+
+table.server-configs td {
+    padding: 0 10px;
+    vertical-align: middle;
+}
